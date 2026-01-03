@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enes Berk Demirci | Portfolio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <div id="splash-screen">
+        <div class="splash-content">
+            <span class="splash-logo">Enes Berk <span class="accent">Demirci</span></span>
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+
+    <div class="background-glow"></div>
+
+    <div class="main-container">
+
+        <header class="header reveal-down">
+            <div class="logo">Enes Berk <span>Demirci</span></div>
+            <div class="header-actions">
+                <a href="assets/cv.pdf" target="_blank" class="cv-btn">
+                    <i class="fas fa-file-pdf"></i> <span data-i18n="btn-cv">Resume</span>
+                </a>
+                <button class="lang-btn" id="langSwitch">
+                    <i class="fas fa-globe"></i> <span>TR / EN</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="bento-grid">
+
+            <div class="card hero-card reveal">
+                <div class="hero-inner">
+                    <div class="hero-text-side">
+                        <span class="status-badge-glow"><span class="dot-glow"></span>Available for work</span>
+                        <h1 data-i18n="hero-title">Engineering Intelligence.</h1>
+                        <p data-i18n="hero-desc">I am a Software Engineer fusing <strong>Flutter</strong> mobile
+                            architecture with <strong>Artificial Intelligence</strong>.</p>
+
+                        <div class="social-mini-row">
+                            <a href="https://github.com/enesbrk" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://linkedin.com/in/enesberkdemirci" target="_blank"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="https://apps.apple.com/app/block-puzzle-flow/id6754453045" target="_blank"><i
+                                    class="fab fa-app-store-ios"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="hero-img-side">
+                        <img src="assets/img/profile.jpg" alt="Enes Berk Demirci" class="profile-avatar-xl">
+                    </div>
+                </div>
+            </div>
+
+            <a href="#about" class="card nav-card reveal-delay-3">
+                <div class="nav-info"><span class="nav-title" data-i18n="nav-about">About Me</span></div>
+                <div class="nav-icon"><i class="fas fa-user-astronaut"></i></div>
+            </a>
+
+            <a href="#contact" class="card nav-card highlight reveal-delay-3">
+                <div class="nav-info"><span class="nav-title" data-i18n="nav-contact">Contact</span></div>
+                <div class="nav-icon"><i class="fas fa-paper-plane"></i></div>
+            </a>
+
+            <a href="#experience" class="card nav-card exp-link reveal-delay-2">
+                <div class="nav-info"><span class="nav-title" data-i18n="nav-exp">Experience</span></div>
+                <div class="nav-icon"><i class="fas fa-briefcase"></i></div>
+            </a>
+
+            <a href="#projects" class="card nav-card project-link reveal-delay-1">
+                <div class="nav-info"><span class="nav-title" data-i18n="nav-proj">Projects</span></div>
+                <div class="nav-icon"><i class="fas fa-layer-group"></i></div>
+            </a>
+
+            <div class="card stack-card reveal">
+                <h3 data-i18n="stack-title">Technical Skills</h3>
+                <div class="marquee-wrapper">
+                    <div class="marquee-content" id="techStackTrack"></div>
+                </div>
+            </div>
+
+            <div class="card ai-card-footer reveal-up" id="aiTriggerCard">
+                <div class="ai-left">
+                    <div class="ai-pulse-icon"><i class="fas fa-sparkles"></i></div>
+                    <div class="ai-label">
+                        <strong data-i18n="ai-promo-title">AI Assistant Online</strong>
+                        <span data-i18n="ai-promo-desc">Ask me about Berk</span>
+                    </div>
+                </div>
+                <div class="ai-fake-input">
+                    <span class="static-text" data-i18n="ai-input-placeholder">How can I help you?</span>
+                </div>
+                <div class="ai-enter-btn"><i class="fas fa-level-down-alt"></i></div>
+            </div>
+
+        </div>
+        <section id="about" class="content-section">
+            <h2 class="section-title reveal-left" data-i18n="nav-about">About Me</h2>
+            <div class="card about-card reveal-up">
+                <p data-i18n="about-text">
+                    I am a Software Engineering student at Istanbul Sabahattin Zaim University. Throughout my studies,
+                    I've had the chance to be part of different student communities and collaborative projects. I am
+                    interested in software development, artificial intelligence, and mobile application development.
+                    I hope to build my career in these areas. I am confident in my abilities to problem-solve, think
+                    analytically, and create solutions that truly meet user needs. I'm a team worker who’s curious about
+                    new technologies and always open to learning and growing through new experiences.
+                </p>
+            </div>
+        </section>
+
+        <section id="experience" class="content-section">
+            <h2 class="section-title reveal-left" data-i18n="sect-exp">Professional Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item reveal-up">
+                    <div class="timeline-date">July 2024 - Aug 2024</div>
+                    <div class="timeline-content">
+                        <h3 data-i18n="exp1-role">Software Engineer Intern</h3>
+                        <span class="company">Bilgisayar Hospital</span>
+                        <p data-i18n="exp1-desc">Developed a cross-platform news application using Flutter, compatible
+                            with both iOS and Android. Implemented a category-based filtering feature to help users
+                            access content based on their
+                            interests. Implemented complex State Management solutions (Provider/Bloc) and integrated
+                            RESTful APIs for real-time data filtering.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal-up">
+                    <div class="timeline-date">May 2021 - Aug 2022</div>
+                    <div class="timeline-content">
+                        <h3 data-i18n="exp2-role">Smart Contract Developer</h3>
+                        <span class="company">Cool Skull Club</span>
+                        <p data-i18n="exp2-desc">Developed smart contracts for the Cool Skull Club NFT project using
+                            Solidity on the Ethereum blockchain, implementing a secure and scalable minting structure.
+                            Integrated MetaMask via Web3.js to enable direct ETH payments.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal-up">
+                    <div class="timeline-date">Aug 2020 - Mar 2021</div>
+                    <div class="timeline-content">
+                        <h3 data-i18n="exp3-role">Web Developer & Content Creator</h3>
+                        <span class="company">Videomarketi</span>
+                        <p data-i18n="exp3-desc">Developed the Videomarket website from scratch using WordPress,
+                            customizing themes and plugins. Integrated Iyzico payment gateway, establishing a seamless
+                            and secure online
+                            payment infrastructure. Designed and managed digital content using Adobe Creative Suite.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <h2 class="section-title reveal-left" data-i18n="sect-proj">Selected Projects</h2>
+            <div class="projects-grid">
+                <div class="card project-card reveal-up">
+                    <div class="project-img-placeholder gradient-1"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3><a href="https://apps.apple.com/app/block-puzzle-flow/id6754453045" target="_blank"
+                                    style="text-decoration: none; color: white;" data-i18n="proj1-title">Block Puzzle
+                                    Flow</a></h3>
+                            <a href="https://apps.apple.com/app/block-puzzle-flow/id6754453045" target="_blank"
+                                class="btn-icon"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <p data-i18n="proj1-desc" style="color: grey;">A completely independent iOS Puzzle Game
+                            developed with Flutter. Managed the entire product lifecycle from UI/UX to App Store
+                            Optimization (ASO).</p>
+                        <div class="tags"><span>Flutter</span><span>ASO</span><span>iOS</span><span>Mobile App</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card project-card reveal-up">
+                    <div class="project-img-placeholder gradient-2"><i class="fas fa-user-check"></i></div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3><a href="https://github.com/enesbrk/Real-Time-Face-Recognition-and-Attendance-System"
+                                    target="_blank" style="text-decoration: none; color: white;"
+                                    data-i18n="proj2-title">Real-Time Face Recognition AI</a></h3>
+                            <a href="https://github.com/enesbrk/Real-Time-Face-Recognition-and-Attendance-System"
+                                target="_blank" class="btn-icon"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <p data-i18n="proj2-desc" style="color: grey;">Developed an automated and contactless
+                            attendance system using Python, OpenCV, and machine learning techniques, enabling real-time
+                            student identification via facial recognition.</p>
+                        <div class="tags"><span>Python</span><span>OpenCV</span><span>ML/DL</span></div>
+                    </div>
+                </div>
+                <div class="card project-card reveal-up">
+                    <div class="project-img-placeholder gradient-3"><i class="fas fa-robot"></i></div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <h3><a href="https://github.com/alperengozum/izubot" target="_blank"
+                                    style="text-decoration: none; color: white;" data-i18n="proj3-title">University
+                                    Chatbot (IzuBot)</a></h3>
+                            <a href="https://github.com/alperengozum/izubot" target="_blank" class="btn-icon"><i
+                                    class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <p data-i18n="proj3-desc" style="color: grey;">Trained the chatbot using the OpenPipe platform
+                            with a structured dataset of over 5,000 categorized Q&A pairs covering multiple university
+                            faculties.</p>
+                        <div class="tags"><span>FastAPI</span><span>NLP</span><span>Python</span><span>OpenPipe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section reveal-up">
+            <div class="card contact-card">
+                <h2 data-i18n="contact-title">Are you ready for some creative work?</h2>
+                <p data-i18n="contact-desc">I am currently available for job opportunities and freelance projects.</p>
+                <a href="mailto:brkennes@gmail.com" class="main-btn mail-fix">brkennes@gmail.com</a>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="chat-overlay" id="chatOverlay">
+        <div class="chat-modal">
+            <div class="chat-header">
+                <div class="ai-identity">
+                    <div class="status-indicator"></div>
+                    <strong data-i18n="chat-header">Berk's AI Assistant</strong>
+                </div>
+                <button class="close-chat" id="closeChat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="message bot"><span data-i18n="chat-welcome">Hello! I am Berk's AI. How can I help you
+                        today?</span></div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" placeholder="Type your question..." id="chatInput">
+                <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
