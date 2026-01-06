@@ -81,11 +81,76 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    let chatHistory = []; 
+
+    
+    async function sendMessage() {
+       
+        const chatInputReal = document.getElementById('chatInput');
+        const chatBodyReal = document.getElementById('chatBody');
+
+        const text = chatInputReal.value.trim();
+        if (!text) return;
+
+        
+        addMessage(text, 'user');
+        chatInputReal.value = '';
+
+        
+        const loadingDiv = document.createElement('div');
+        loadingDiv.classList.add('message', 'bot');
+        loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h"></i>';
+        loadingDiv.id = 'loadingMessage';
+        chatBodyReal.appendChild(loadingDiv);
+        chatBodyReal.scrollTop = chatBodyReal.scrollHeight;
+
+        
+        const sleepTimeout = setTimeout(() => {
+            const currentLoading = document.getElementById('loadingMessage');
+            if (currentLoading) {
+                currentLoading.innerHTML = "🥱 Kusura bakma uyuyordum, sunucularımın uyanması 30-40 saniye sürebilir...";
+            }
+        }, 3000);
+
+        try {
+            
+            const response = await fetch('https://berk-backend.onrender.com/chat', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    message: text,
+                    history: chatHistory 
+                })
+            });
+
+            const data = await response.json();
+            
+            
+            clearTimeout(sleepTimeout);
+            const loadingMsg = document.getElementById('loadingMessage');
+            if (loadingMsg) loadingMsg.remove();
+
+            
+            addMessage(data.reply, 'bot');
+
+            
+            chatHistory.push({ role: "user", parts: [{ text: text }] });
+            chatHistory.push({ role: "model", parts: [{ text: data.reply }] });
+
+        } catch (error) {
+            console.error(error);
+            clearTimeout(sleepTimeout);
+            const loadingMsg = document.getElementById('loadingMessage');
+            if (loadingMsg) loadingMsg.remove();
+            addMessage("Bağlantı hatası oluştu.", 'bot');
+        }
+    }
+
     
     const translations = {
         en: {
             "hero-title": "Engineering Intelligence",
-            "hero-desc": "I am a Software Engineer fusing <strong>Flutter</strong> mobile architecture with <strong>Artificial Intelligence</strong>.",
+            "hero-desc": "I am a <strong> Software Engineer</strong>.",
             "btn-cv": "Resume",
             "nav-proj": "Projects", "nav-exp": "Experience", "nav-about": "About Me", "nav-contact": "Contact",
             "stack-title": "Technical Skills",
@@ -108,11 +173,11 @@ document.addEventListener('DOMContentLoaded', () => {
             "contact-title": "Ready to create something amazing?",
             "contact-desc": "I am currently available for freelance projects and job opportunities.",
             "chat-header": "Berk's AI Assistant",
-            "chat-welcome": "Hello! I am Berk's AI. How can I assist you today?"
+            "chat-welcome": "Hello! I am Berk's AI. How can I help you today?"
         },
         tr: {
             "hero-title": "Mühendislik Zekası",
-            "hero-desc": "Ben <strong>Flutter</strong> mobil mimarisini <strong>Yapay Zeka</strong> ile birleştiren bir Yazılım Mühendisiyim.",
+            "hero-desc": "<strong> Yazılım Mühendisiyim</strong>.",
             "btn-cv": "Özgeçmiş",
             "nav-proj": "Projeler", "nav-exp": "Deneyim", "nav-about": "Hakkımda", "nav-contact": "İletişim",
             "stack-title": "Teknik Yetenekler",
@@ -168,12 +233,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     
+    // --- GÜNCELLENMİŞ MESAJ EKLEME FONKSİYONU ---
     function addMessage(text, sender) {
         const div = document.createElement('div');
-        div.classList.add('message', sender);
-        div.innerHTML = text;
+        
+        // CSS için sınıfları ekliyoruz (message + user/bot)
+        div.classList.add('message', sender); 
+        
+        if (sender === 'bot') {
+            // Bot ise Markdown'ı HTML'e çevir (Kalın, başlık vs. olsun)
+            div.innerHTML = marked.parse(text);
+        } else {
+            // Kullanıcı ise düz metin bas (Güvenlik için)
+            div.textContent = text;
+        }
+        
         chatBody.appendChild(div);
-        chatBody.scrollTop = chatBody.scrollHeight;
+        chatBody.scrollTop = chatBody.scrollHeight; // En alta kaydır
     }
 
     async function sendMessage() {

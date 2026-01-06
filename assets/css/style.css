@@ -792,13 +792,68 @@ body.loaded #splash-screen {
     background: #0f0f0f;
 }
 
-.message.bot {
-    background: #1f1f1f;
-    padding: 12px;
-    border-radius: 12px;
-    color: #ddd;
+#chatBody {
+    display: flex;
+    flex-direction: column; /* Mesajları alt alta diz */
+    gap: 15px; /* Mesajlar arası boşluk */
+    padding: 15px;
+}
+
+/* Genel Mesaj Balonu Stili */
+.message {
+    max-width: 80%; /* Balon genişliği ekranın %80'ini geçmesin */
+    padding: 12px 16px;
     font-size: 0.95rem;
-    max-width: 80%;
+    line-height: 1.5;
+    position: relative;
+    word-wrap: break-word; /* Uzun kelimeleri alt satıra at */
+}
+
+/* 👤 KULLANICI MESAJI (SAĞA YASLA -> flex-end) */
+.message.user {
+    align-self: flex-end;            /* SAĞA GİDER */
+    background-color: gray;       /* Mavi (Gönderilen Mesaj Rengi) */
+    color: #fff;                     /* Beyaz Yazı */
+    border-radius: 15px 15px 0 15px; /* Sağ alt köşe sivri */
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+    text-align: left;
+}
+
+.message.bot {
+    align-self: flex-start;          /* SOLA GİDER */
+    background-color: #333;          /* Koyu Gri (Gelen Mesaj Rengi) */
+    color: #fff;                     /* Beyaz Yazı */
+    border-radius: 15px 15px 15px 0; /* Sol alt köşe sivri */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    text-align: left;
+}
+
+.message.bot p:last-child {
+    margin-bottom: 0;
+}
+
+/* Kalın Yazılar (**text**) */
+.message.bot strong {
+    color: #fff; /* Sarı vurgu rengi */
+    font-weight: 700;
+}
+
+/* Başlıklar (### text) */
+.message.bot h3 {
+    font-size: 1.1em;
+    margin: 10px 0 5px 0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Listeler (* item) */
+.message.bot ul, .message.bot ol {
+    margin: 5px 0 10px 20px;
+    padding: 0;
+}
+
+.message.bot li {
+    margin-bottom: 4px;
 }
 
 .chat-input-area {
