@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    
     if (history.scrollRestoration) {
         history.scrollRestoration = 'manual';
     }
@@ -39,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }, 1500);
 
-    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -50,14 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.reveal, .reveal-up, .reveal-left, .reveal-down').forEach(el => observer.observe(el));
 
+
     
     const aiTrigger = document.getElementById('aiTriggerCard');
     const chatOverlay = document.getElementById('chatOverlay');
     const closeChat = document.getElementById('closeChat');
     
-    // Chat elemanlarını tanımlayalım
+    
     const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.querySelector('.send-btn'); // HTML'deki butonu seçiyoruz
+    const sendBtn = document.querySelector('.send-btn'); 
     const chatBody = document.getElementById('chatBody');
 
     if (aiTrigger && chatOverlay) {
@@ -81,36 +80,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    let chatHistory = []; 
+    
+    let chatHistory = [];       
+    let isFirstMessage = true;  
+
+    
+    function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.classList.add('message', sender); 
+        
+        if (sender === 'bot') {
+            
+            div.innerHTML = marked.parse(text);
+        } else {
+            
+            div.textContent = text;
+        }
+        
+        chatBody.appendChild(div);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
 
     
     async function sendMessage() {
-       
-        const chatInputReal = document.getElementById('chatInput');
-        const chatBodyReal = document.getElementById('chatBody');
-
-        const text = chatInputReal.value.trim();
+        
+        const text = chatInput.value.trim();
         if (!text) return;
 
         
         addMessage(text, 'user');
-        chatInputReal.value = '';
+        chatInput.value = '';
 
         
         const loadingDiv = document.createElement('div');
         loadingDiv.classList.add('message', 'bot');
-        loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h"></i>';
         loadingDiv.id = 'loadingMessage';
-        chatBodyReal.appendChild(loadingDiv);
-        chatBodyReal.scrollTop = chatBodyReal.scrollHeight;
+        loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h"></i>';
+        chatBody.appendChild(loadingDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
 
         
-        const sleepTimeout = setTimeout(() => {
-            const currentLoading = document.getElementById('loadingMessage');
-            if (currentLoading) {
-                currentLoading.innerHTML = "🥱 Kusura bakma uyuyordum, sunucularımın uyanması 30-40 saniye sürebilir...";
-            }
-        }, 3000);
+        let sleepTimeout;
+
+        
+        if (isFirstMessage) {
+            sleepTimeout = setTimeout(() => {
+                const currentLoading = document.getElementById('loadingMessage');
+                if (currentLoading) {
+                    currentLoading.innerHTML = "☕ Sunucularımı uyandırıyorum, kahvemi alıp gelmem 30-40 saniye sürebilir. Lütfen bekleyin...";
+                }
+            }, 2000); 
+        }
 
         try {
             
@@ -126,7 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             
-            clearTimeout(sleepTimeout);
+            if (isFirstMessage) {
+                clearTimeout(sleepTimeout);
+                isFirstMessage = false;
+            }
+
             const loadingMsg = document.getElementById('loadingMessage');
             if (loadingMsg) loadingMsg.remove();
 
@@ -139,12 +163,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error(error);
-            clearTimeout(sleepTimeout);
+            if (isFirstMessage) clearTimeout(sleepTimeout);
+            
             const loadingMsg = document.getElementById('loadingMessage');
             if (loadingMsg) loadingMsg.remove();
-            addMessage("Bağlantı hatası oluştu.", 'bot');
+            
+            addMessage("Bağlantı hatası oluştu. Lütfen tekrar dene.", 'bot');
         }
     }
+
+    
+    if(sendBtn) {
+        sendBtn.addEventListener('click', sendMessage);
+    }
+
+    if(chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+
 
     
     const translations = {
@@ -170,6 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
             "proj3-title": "University Chatbot (IzuBot)",
             "proj3-desc": "An intelligent Q&A bot trained on a dataset of 5,000+ university regulations. Powered by a FastAPI backend, it utilizes Natural Language Processing (NLP) to deliver instant, context-aware responses.",
             "about-text": "I'm a Software Engineering student at Istanbul Sabahattin Zaim University. Throughout my studies, I've had the chance to be part of different student communities and collaborative projects. I am interested in software development, artificial intelligence, and mobile application development. I hope to build my career in these areas. I am confident in my abilities to problem-solve, think analytically, and create solutions that truly meet user needs. I'm a team worker who’s curious about new technologies and always open to learning and growing through new experiences.",
+            "proj4-title": "EcoLens",
+            "proj4-desc": "Mobile waste recognition and classification app developed with Swift and YOLOv11. It processes camera input in real-time to identify waste types for recycling.",
+            "proj5-title": "AI Powered Portfolio",
+            "proj5-desc": "An interactive portfolio website powered by FastAPI and Gemini 2.5 Flash. Unlike static sites, it features a context-aware AI assistant that answers questions about my CV in real-time.",
             "contact-title": "Ready to create something amazing?",
             "contact-desc": "I am currently available for freelance projects and job opportunities.",
             "chat-header": "Berk's AI Assistant",
@@ -196,6 +238,10 @@ document.addEventListener('DOMContentLoaded', () => {
             "proj2-desc": "OpenCV ve Makine Öğrenimi kullanan Python tabanlı otomatik yoklama sistemi. Sistem, gerçek zamanlı video akışlarını işleyerek öğrencileri yüksek doğrulukla tespit eder ve verileri Firebase'e kaydeder.",
             "proj3-title": "Üniversite Asistanı (IzuBot)",
             "proj3-desc": "5.000+ üniversite yönetmeliği verisiyle eğitilmiş akıllı bir soru-cevap botu. FastAPI altyapısı ile güçlendirilmiş olup, Doğal Dil İşleme (NLP) kullanarak öğrenci sorularına anlık yanıtlar verir.",
+            "proj4-title": "EcoLens",
+            "proj4-desc": "Swift ve YOLOv11 kullanılarak geliştirilen mobil atık tanıma ve sınıflandırma uygulaması. Geri dönüşüm sürecini hızlandırmak için kamera görüntülerini gerçek zamanlı işler.",
+            "proj5-title": "AI Destekli Portfolyo",
+            "proj5-desc": "FastAPI ve Gemini 2.5 Flash ile güçlendirilmiş interaktif portfolyo sitesi. Statik sitelerin aksine, CV'm hakkındaki soruları gerçek zamanlı yanıtlayan bağlam duyarlı bir yapay zeka asistanı içerir.",
             "about-text": "İstanbul Sabahattin Zaim Üniversitesi'nde Yazılım Mühendisliği öğrencisiyim. Eğitimim boyunca farklı öğrenci topluluklarında ve ortak projelerde yer alma şansı buldum. Yazılım geliştirme, yapay zeka ve mobil uygulama geliştirme alanlarına ilgi duyuyorum ve kariyerimi bu alanlarda inşa etmeyi hedefliyorum. Sorun çözme yeteneğime, analitik düşünme becerime ve kullanıcı ihtiyaçlarını gerçekten karşılayan çözümler üretme konusundaki yetkinliğime güveniyorum. Yeni teknolojilere meraklı, öğrenmeye ve yeni deneyimlerle gelişmeye her zaman açık bir takım oyuncusuyum.",
             "contact-title": "Harika bir şey yaratmaya hazır mısın?",
             "contact-desc": "Şu anda freelance projeler ve iş fırsatları için uygunum.",
@@ -229,90 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     element.style.opacity = 1;
                 }, 300);
             }
-        });
-    }
-
-    
-    // --- GÜNCELLENMİŞ MESAJ EKLEME FONKSİYONU ---
-    function addMessage(text, sender) {
-        const div = document.createElement('div');
-        
-        // CSS için sınıfları ekliyoruz (message + user/bot)
-        div.classList.add('message', sender); 
-        
-        if (sender === 'bot') {
-            // Bot ise Markdown'ı HTML'e çevir (Kalın, başlık vs. olsun)
-            div.innerHTML = marked.parse(text);
-        } else {
-            // Kullanıcı ise düz metin bas (Güvenlik için)
-            div.textContent = text;
-        }
-        
-        chatBody.appendChild(div);
-        chatBody.scrollTop = chatBody.scrollHeight; // En alta kaydır
-    }
-
-    async function sendMessage() {
-        const text = chatInput.value.trim();
-        if (!text) return;
-
-        
-        addMessage(text, 'user');
-        chatInput.value = '';
-
-        
-        const loadingDiv = document.createElement('div');
-        loadingDiv.classList.add('message', 'bot');
-        loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h"></i>';
-        loadingDiv.id = 'loadingMessage';
-        chatBody.appendChild(loadingDiv);
-        chatBody.scrollTop = chatBody.scrollHeight;
-
-        
-        const sleepTimeout = setTimeout(() => {
-            const currentLoading = document.getElementById('loadingMessage');
-            if (currentLoading) {
-                currentLoading.innerHTML = "🥱 Kusura bakma uyuyordum, sunucularımın uyanması 30-40 saniye sürebilir. Kahvemi alıp geliyorum...";
-            }
-        }, 3000);
-
-        try {
-            
-            const response = await fetch('https://berk-backend.onrender.com/chat', { 
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
-            });
-
-            const data = await response.json();
-            
-            
-            clearTimeout(sleepTimeout);
-            const loadingMsg = document.getElementById('loadingMessage');
-            if (loadingMsg) loadingMsg.remove();
-
-            
-            addMessage(data.reply, 'bot');
-
-        } catch (error) {
-            console.error(error);
-            clearTimeout(sleepTimeout);
-            
-            const loadingMsg = document.getElementById('loadingMessage');
-            if (loadingMsg) loadingMsg.remove();
-            
-            addMessage("Bağlantı hatası oluştu. Lütfen tekrar dene.", 'bot');
-        }
-    }
-
-    
-    if(sendBtn) {
-        sendBtn.addEventListener('click', sendMessage);
-    }
-
-    if(chatInput) {
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
         });
     }
 
