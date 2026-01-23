@@ -127,6 +127,10 @@ body.loaded #splash-screen {
     gap: 1rem;
 }
 
+.lang-btn{
+    flex: none;
+}
+
 .cv-btn,
 .lang-btn {
     text-decoration: none;
@@ -705,7 +709,8 @@ body.loaded #splash-screen {
     text-decoration: none;
     font-weight: 600;
     transition: 0.3s;
-    word-break: break-all;
+    word-break: normal;
+    overflow-wrap: break-word;
     max-width: 95%;
     text-align: center;
 }
