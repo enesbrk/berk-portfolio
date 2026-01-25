@@ -295,7 +295,7 @@ body.loaded #splash-screen {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* --- NAV CARDS --- */
+
 .nav-card {
     grid-column: span 1;
     display: flex;
