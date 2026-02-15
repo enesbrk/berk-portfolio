@@ -127,9 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sleepTimeout = setTimeout(() => {
                 const currentLoading = document.getElementById('loadingMessage');
                 if (currentLoading) {
-                    currentLoading.innerHTML = "☕ Sunucularımı uyandırıyorum, kahvemi alıp gelmem 30-40 saniye sürebilir. Lütfen bekleyin...";
+                    currentLoading.innerHTML = "☕ Sunucularımı uyandırıyorum, kahvemi alıp gelmem bir kaç saniye sürebilir. Lütfen bekleyin...";
                 }
-            }, 2000); 
+            }, 5000); 
         }
 
         try {
