@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             
-            const response = await fetch('https://berk-backend.onrender.com/chat', { 
+            const response = await fetch('https://berkd.vercel.app/', { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
